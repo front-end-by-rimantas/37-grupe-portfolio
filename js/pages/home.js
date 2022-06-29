@@ -1,3 +1,7 @@
+import { servicesData } from '../data/servicesData.js';
+
+console.log(servicesData);
+
 /* header start */
 /* header end */
 
