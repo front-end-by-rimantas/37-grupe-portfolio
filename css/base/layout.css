@@ -1,16 +1,19 @@
 :root {
-    --col1: calc(100% / 12);
-    --col2: calc(var(--col1) * 2);
-    --col3: calc(var(--col1) * 3);
-    --col4: calc(var(--col1) * 4);
-    --col5: calc(var(--col1) * 5);
-    --col6: calc(var(--col1) * 6);
-    --col7: calc(var(--col1) * 7);
-    --col8: calc(var(--col1) * 8);
-    --col9: calc(var(--col1) * 9);
-    --col10: calc(var(--col1) * 10);
-    --col11: calc(var(--col1) * 11);
-    --col12: calc(var(--col1) * 12);
+    --half-gap: 10px;
+    --gap: calc(var(--half-gap) * 2);
+    --col1: calc(100% / 12 - var(--gap));
+    --colgap: calc(var(--col1) + var(--gap));
+    --col2: calc(var(--col1) + var(--colgap));
+    --col3: calc(var(--col2) + var(--colgap));
+    --col4: calc(var(--col3) + var(--colgap));
+    --col5: calc(var(--col4) + var(--colgap));
+    --col6: calc(var(--col5) + var(--colgap));
+    --col7: calc(var(--col6) + var(--colgap));
+    --col8: calc(var(--col7) + var(--colgap));
+    --col9: calc(var(--col8) + var(--colgap));
+    --col10: calc(var(--col9) + var(--colgap));
+    --col11: calc(var(--col10) + var(--colgap));
+    --col12: calc(var(--col11) + var(--colgap));
 }
 
 .container {
@@ -26,8 +29,7 @@
 
 .container > .row > [class*='col-'] {
     float: left;
-    padding: 0 15px;
-    margin: 5px 0;
+    margin: 5px var(--half-gap);
 }
 .container > .row > .col-1 {
     width: var(--col1);
