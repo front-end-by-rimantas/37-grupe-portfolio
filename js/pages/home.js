@@ -1,6 +1,7 @@
+import { services } from '../components/services.js';
 import { servicesData } from '../data/servicesData.js';
 
-console.log(servicesData);
+services('#services_block', servicesData);
 
 /* header start */
 /* header end */
