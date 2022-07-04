@@ -17,8 +17,6 @@ function services(selector, data) {
         if (!isValidServiceItem(item)) {
             continue;
         }
-
-        console.log(item);
         HTML += `<div class="col-12 col-md-6 col-lg-4 services">
                     <i class="icon fa fa-${item.icon}"></i>
                     <h3 class="title">${item.title}</h3>
