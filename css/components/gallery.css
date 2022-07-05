@@ -40,6 +40,9 @@
     height: 260px;
     background-color: pink;
 }
+.gallery > .content > .item.hide {
+    display: none;
+}
 
 @media (min-width: 580px) {
     .gallery > .content {

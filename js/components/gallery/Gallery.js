@@ -50,12 +50,16 @@ class Gallery {
 
         for (const { tags } of this.data) {
             for (const tag of tags) {
-                if (uniqueTags.includes(tag)) {
-                    continue;
+                if (!uniqueTags.includes(tag)) {
+                    uniqueTags.push(tag);
                 }
-                uniqueTags.push(tag);
-                HTML += `<li class="option">${this.capitalize(tag)}</li>`;
             }
+        }
+
+        uniqueTags.sort();
+
+        for (const tag of uniqueTags) {
+            HTML += `<li class="option">${this.capitalize(tag)}</li>`;
         }
 
         return HTML;
@@ -69,6 +73,7 @@ class Gallery {
                         <img src="#" alt="Gallery image">
                         <div class="overlay">
                             <div class="title">Bulbs</div>
+                            <div class="tags">${item.tags.map(t => `<p>${t}</p>`).join('')}</div>
                             <div class="actions">
                                 <a href="#" class="fa fa-chain-broken"></a>
                                 <a href="#" class="fa fa-search-plus"></a>
@@ -86,8 +91,29 @@ class Gallery {
             <div class="content">${this.contentHTML()}</div>`;
     }
 
+    optionAction(event) {
+        console.log(this);
+        const tagName = event.target.textContent.toLowerCase();
+        const contentItemsDOM = this.DOM.querySelectorAll('.content > .item');
+
+        for (let i = 0; i < this.data.length; i++) {
+            const itemDOM = contentItemsDOM[i];
+            const itemData = this.data[i];
+            if (itemData.tags.includes(tagName) || tagName === 'all') {
+                itemDOM.classList.remove('hide');
+            } else {
+                itemDOM.classList.add('hide');
+            }
+        }
+    }
+
     enableFilter() {
-        console.log('ijungiam filtra...');
+        const filterDOM = this.DOM.querySelector('.filter');
+        const filterOptionsDOM = filterDOM.querySelectorAll('.option');
+
+        for (const optionDOM of filterOptionsDOM) {
+            optionDOM.addEventListener('click', this.optionAction.bind(this));
+        }
     }
 }
 
