@@ -1,4 +1,5 @@
 import { Gallery } from '../components/gallery/Gallery.js';
+import { PortfolioItem } from '../components/gallery/PortfolioItem.js';
 import { services } from '../components/services.js';
 import { portfolioData } from '../data/portfolioData.js';
 import { servicesData } from '../data/servicesData.js';
@@ -19,7 +20,7 @@ services('#services_block', servicesData);
 
 /* portfolio start */
 
-new Gallery('#portfolio_block', portfolioData);
+new Gallery('#portfolio_block', portfolioData, PortfolioItem);
 
 /* portfolio end */
 

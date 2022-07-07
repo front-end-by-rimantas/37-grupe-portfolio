@@ -1,9 +1,15 @@
 class Gallery {
-    constructor(selector, data) {
+    constructor(selector, data, itemClass) {
         this.selector = selector;
         this.data = data;
+        this.itemClass = itemClass;
 
         this.DOM = null;
+        this.lightboxDOM = null;
+        this.backgroundDOM = null;
+        this.closeDOM = null;
+        this.previousDOM = null;
+        this.nextDOM = null;
 
         this.init();
     }
@@ -17,6 +23,7 @@ class Gallery {
 
         this.render();
         this.enableFilter();
+        this.enableLightbox();
     }
 
     isValidSelector() {
@@ -68,17 +75,10 @@ class Gallery {
     contentHTML() {
         let HTML = '';
 
-        for (const item of this.data) {
+        for (const itemData of this.data) {
+            const itemObject = new this.itemClass(itemData);
             HTML += `<div class="item">
-                        <img src="#" alt="Gallery image">
-                        <div class="overlay">
-                            <div class="title">Bulbs</div>
-                            <div class="tags">${item.tags.map(t => `<p>${t}</p>`).join('')}</div>
-                            <div class="actions">
-                                <a href="#" class="fa fa-chain-broken"></a>
-                                <a href="#" class="fa fa-search-plus"></a>
-                            </div>
-                        </div>
+                        ${itemObject.render()}
                     </div>`;
         }
 
@@ -88,11 +88,28 @@ class Gallery {
     render() {
         this.DOM.innerHTML = `
             <ul class="filter">${this.filterHTML()}</ul>
-            <div class="content">${this.contentHTML()}</div>`;
+            <div class="content">${this.contentHTML()}</div>
+            <div class="lightbox show">
+                <div class="background"></div>
+                <button class="previous fa fa-caret-left"></button>
+                <div class="content">
+                    <img src="./img/portfolio/1b.jpg" alt="">
+                    <button class="close fa fa-times"></button>
+                    <div class="pagination">
+                        <span class="current">1</span> of <span class="total">6</span>
+                    </div>
+                </div>
+                <button class="next fa fa-caret-right"></button>
+            </div>`;
+
+        this.lightboxDOM = this.DOM.querySelector('.lightbox');
+        this.backgroundDOM = this.lightboxDOM.querySelector('.background');
+        this.closeDOM = this.lightboxDOM.querySelector('.close');
+        this.previousDOM = this.lightboxDOM.querySelector('.previous');
+        this.nextDOM = this.lightboxDOM.querySelector('.next');
     }
 
     optionAction(event) {
-        console.log(this);
         const tagName = event.target.textContent.toLowerCase();
         const contentItemsDOM = this.DOM.querySelectorAll('.content > .item');
 
@@ -114,6 +131,21 @@ class Gallery {
         for (const optionDOM of filterOptionsDOM) {
             optionDOM.addEventListener('click', this.optionAction.bind(this));
         }
+    }
+
+    hideLightbox() {
+        this.lightboxDOM.classList.remove('show');
+    }
+
+    enableLightbox() {
+        this.closeDOM.addEventListener('click', this.hideLightbox.bind(this));
+        this.backgroundDOM.addEventListener('click', this.hideLightbox.bind(this));
+
+        addEventListener('keydown', ({ code }) => {
+            if (code === 'Escape') {
+                this.hideLightbox();
+            }
+        });
     }
 }
 
