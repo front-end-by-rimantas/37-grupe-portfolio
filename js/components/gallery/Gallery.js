@@ -18,7 +18,7 @@ class Gallery {
         if (!this.isValidSelector()
             || !this.findTargetElement()
             || !this.isValidData()) {
-            return false;
+            throw new Error('Klaida su galerijos duomenimis');
         }
 
         this.render();
@@ -29,7 +29,7 @@ class Gallery {
     isValidSelector() {
         if (typeof this.selector !== 'string'
             || this.selector === '') {
-            return false;
+            throw new Error('Nevalidus selektorius');
         }
         return true;
     }
@@ -40,9 +40,9 @@ class Gallery {
     }
 
     isValidData() {
-        if (!Array.isArray(this.data)
-            || this.data.length === 0) {
-            return false;
+        if (!Array.isArray(this.data.list)
+            || this.data.list.length === 0) {
+            throw new Error('Nevalidus duomenys');
         }
         return true;
     }
@@ -55,7 +55,7 @@ class Gallery {
         let HTML = '<li class="option active">All</li>';
         const uniqueTags = [];
 
-        for (const { tags } of this.data) {
+        for (const { tags } of this.data.list) {
             for (const tag of tags) {
                 if (!uniqueTags.includes(tag)) {
                     uniqueTags.push(tag);
@@ -75,8 +75,8 @@ class Gallery {
     contentHTML() {
         let HTML = '';
 
-        for (const itemData of this.data) {
-            const itemObject = new this.itemClass(itemData);
+        for (const itemData of this.data.list) {
+            const itemObject = new this.itemClass(itemData, this.data.imgFolder);
             HTML += `<div class="item">
                         ${itemObject.render()}
                     </div>`;
@@ -89,7 +89,7 @@ class Gallery {
         this.DOM.innerHTML = `
             <ul class="filter">${this.filterHTML()}</ul>
             <div class="content">${this.contentHTML()}</div>
-            <div class="lightbox show">
+            <div class="lightbox">
                 <div class="background"></div>
                 <button class="previous fa fa-caret-left"></button>
                 <div class="content">
@@ -113,9 +113,9 @@ class Gallery {
         const tagName = event.target.textContent.toLowerCase();
         const contentItemsDOM = this.DOM.querySelectorAll('.content > .item');
 
-        for (let i = 0; i < this.data.length; i++) {
+        for (let i = 0; i < this.data.list.length; i++) {
             const itemDOM = contentItemsDOM[i];
-            const itemData = this.data[i];
+            const itemData = this.data.list[i];
             if (itemData.tags.includes(tagName) || tagName === 'all') {
                 itemDOM.classList.remove('hide');
             } else {
