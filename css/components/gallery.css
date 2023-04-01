@@ -1,0 +1,56 @@
+.gallery {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+.gallery > .filter {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px 20px;
+    list-style: none;
+    font-weight: bold;
+    line-height: 30px;
+}
+.gallery > .filter > .option {
+    position: relative;
+    cursor: pointer;
+}
+.gallery > .filter > .option::before {
+    content: '';
+    display: block;
+    height: 3px;
+    width: 0;
+    background-color: #333;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    transition: all 0.5s;
+}
+.gallery > .filter > .option.active::before {
+    width: 100%;
+}
+
+.gallery > .content {
+    display: grid;
+    gap: 20px;
+}
+.gallery > .content > .item {
+    width: 100%;
+    height: 260px;
+    background-color: pink;
+}
+.gallery > .content > .item.hide {
+    display: none;
+}
+
+@media (min-width: 580px) {
+    .gallery > .content {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+@media (min-width: 900px) {
+    .gallery > .content {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+}
