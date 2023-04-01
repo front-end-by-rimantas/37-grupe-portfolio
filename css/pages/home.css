@@ -8,7 +8,10 @@
 /* components */
 @import '../components/button.css';
 @import '../components/footer.css';
+@import '../components/gallery.css';
 @import '../components/header.css';
+@import '../components/lightbox.css';
+@import '../components/portfolio-item.css';
 @import '../components/services.css';
 
 /* CUSTOM STYLE */

@@ -1,6 +1,11 @@
+import { Gallery } from '../components/gallery/Gallery.js';
+import { PortfolioItem } from '../components/gallery/PortfolioItem.js';
 import { services } from '../components/services.js';
+import { portfolioData } from '../data/portfolioData.js';
 import { servicesData } from '../data/servicesData.js';
 
+
+new Gallery('#portfolio_block', portfolioData, PortfolioItem);
 services('#services_block', servicesData);
 
 /* header start */
@@ -16,6 +21,7 @@ services('#services_block', servicesData);
 /* services end */
 
 /* portfolio start */
+
 /* portfolio end */
 
 /* testimonials start */
